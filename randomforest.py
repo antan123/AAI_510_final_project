@@ -9,6 +9,8 @@ from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_s
                            precision_recall_curve)
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
+import joblib
+from pathlib import Path
 
 def preprocessor(X, num, cat):
     """Preprocess data by standardizing numerical features and OneHotEncoding categorical features."""
@@ -113,3 +115,23 @@ def plot_feature_importance(model, feature_names, top_n=20):
     plt.tight_layout()
     plt.show()
     return indices, importances
+
+def save_pipeline(model, preprocessor, label_encoder, folder_path='model'):
+    
+    # Create folder if it doesn't exist
+    Path(folder_path).mkdir(parents=True, exist_ok=True)
+    
+    # Save each component
+    joblib.dump(model, f'{folder_path}/model.joblib')
+    joblib.dump(preprocessor, f'{folder_path}/preprocessor.joblib')
+    joblib.dump(label_encoder, f'{folder_path}/label_encoder.joblib')
+    
+    print(f"Pipeline saved to {folder_path}")
+
+def load_pipeline(folder_path='model'):
+    model = joblib.load(f'{folder_path}/model.joblib')
+    preprocessor = joblib.load(f'{folder_path}/preprocessor.joblib')
+    label_encoder = joblib.load(f'{folder_path}/label_encoder.joblib')
+    
+    print("Pipeline loaded successfully")
+    return model, preprocessor, label_encoder
