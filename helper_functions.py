@@ -119,7 +119,12 @@ def hyperparameter_tuning_xgb(X_train, y_train, param_grid=None, n_jobs=-1):
     )
     search.fit(X_train, y_train)
     return search
-
+    
+def random_xgb(X_train, y_train, **best_params):
+    """Create and train a XGBoost with optimized parameters."""
+    xgb_random = XGBClassifier(**best_params)
+    return xgb_random.fit(X_train, y_train)
+    
 # SVC
 def svc_classifier(X_train, y_train, **kwargs):
     """Train a Support Vector Classifier with default or custom parameters."""
@@ -145,6 +150,11 @@ def hyperparameter_tuning_svc(X_train, y_train, param_grid=None, n_jobs=-1):
     grid_cv = GridSearchCV(estimator=svc, param_grid=param_grid, cv=5, verbose=1, n_jobs=n_jobs)
     grid_cv.fit(X_train, y_train)
     return grid_cv
+
+def random_svc(X_train, y_train, **best_params):
+    """Create and train a SVC with optimized parameters."""
+    svc_random = SVC(**best_params)
+    return svc_random.fit(X_train, y_train)
 
 # Shared Evaluation & Plotting
 def eval_metrics(y_test, y_pred, y_proba=None, classes=None):
@@ -189,6 +199,79 @@ def plot_shap_summary(model, X, feature_names):
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X)
     shap.summary_plot(shap_values, X, feature_names=feature_names)
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Model Comparison
+def plot_model_comparison(models_dict, X_test, y_test):
+    """
+    Creates a bar chart comparing performance metrics across multiple models.
+    Handles both regular models and GridSearchCV/RandomizedSearchCV objects.
+    
+    Parameters:
+        models_dict (dict): Dictionary of {'model_name': model_object}
+        X_test: Test features
+        y_test: True labels for test set
+    """
+    # Metrics to compare
+    metrics = {
+        'Accuracy': accuracy_score,
+        'Precision': lambda y_true, y_pred: precision_score(y_true, y_pred, average='weighted'),
+        'Recall': lambda y_true, y_pred: recall_score(y_true, y_pred, average='weighted'),
+        'F1 Score': lambda y_true, y_pred: f1_score(y_true, y_pred, average='weighted')
+    }
+    
+    # Prepare results
+    results = {}
+    model_names = []
+    
+    for name, model in models_dict.items():
+        # Handle GridSearchCV/RandomizedSearchCV objects
+        if hasattr(model, 'best_estimator_'):
+            model = model.best_estimator_
+        
+        # Calculate metrics
+        y_pred = model.predict(X_test)
+        model_metrics = {
+            metric_name: metric_fn(y_test, y_pred)
+            for metric_name, metric_fn in metrics.items()
+        }
+        
+        results[name] = model_metrics
+        model_names.append(name)
+    
+    # Plot setup
+    fig, ax = plt.subplots(figsize=(12, 6))
+    bar_width = 0.2
+    index = np.arange(len(metrics))
+    
+    # Create bars for each model
+    colors = plt.cm.rainbow(np.linspace(0, 1, len(model_names)))
+    for i, model_name in enumerate(model_names):
+        values = [results[model_name][metric] for metric in metrics]
+        ax.bar(index + i*bar_width, values, bar_width, 
+               label=model_name, color=colors[i])
+    
+    # Formatting
+    ax.set_xlabel('Metrics', fontsize=12)
+    ax.set_ylabel('Score', fontsize=12)
+    ax.set_title('Model Performance Comparison', fontsize=14, pad=20)
+    ax.set_xticks(index + bar_width*(len(model_names)-1)/2)
+    ax.set_xticklabels(metrics.keys())
+    ax.set_ylim(0, 1.1)
+    ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
+    
+    # Add value labels
+    for i, model_name in enumerate(model_names):
+        for j, metric in enumerate(metrics):
+            value = results[model_name][metric]
+            ax.text(index[j] + i*bar_width, value + 0.02, f'{value:.3f}', 
+                   ha='center', va='bottom', fontsize=9)
+    
+    plt.tight_layout()
+    return fig
 
 # Save/Load Pipeline
 def save_pipeline(model, preprocessor, label_encoder, folder_path='model'):
