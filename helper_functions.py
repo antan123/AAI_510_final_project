@@ -58,7 +58,7 @@ def random_forest_classifier(X_train, y_train, **kwargs):
     return model.fit(X_train, y_train)
 
 def hyperparameter_tuning_rf(X_train, y_train, param_grid=None, n_jobs=-1):
-    """Hyperparameter tuning for Random Forest."""
+    """Perform hyperparameter tuning using GridSearchCV and return the trained GridSearchCV object."""
     if param_grid is None:
         param_grid = {
             'bootstrap': [True, False],
@@ -66,10 +66,22 @@ def hyperparameter_tuning_rf(X_train, y_train, param_grid=None, n_jobs=-1):
             'min_samples_split': [5, 10, 15],
             'n_estimators': [200, 300, 400]
         }
+    
     rf = RandomForestClassifier(random_state=42)
-    grid_cv = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, verbose=1, n_jobs=n_jobs)
+    grid_cv = GridSearchCV(
+        estimator=rf,
+        param_grid=param_grid,
+        cv=5,
+        verbose=1,
+        n_jobs=n_jobs
+    )
     grid_cv.fit(X_train, y_train)
-    return grid_cv
+    return grid_cv  # Return the entire GridSearchCV object
+
+def grid_rfc(X_train, y_train, **best_params):
+    """Create and train a Random Forest classifier with optimized parameters."""
+    rf_grid = RandomForestClassifier(**best_params)
+    return rf_grid.fit(X_train, y_train)
 
 # XGBoost
 def xgboost_classifier(X_train, y_train, **kwargs):
