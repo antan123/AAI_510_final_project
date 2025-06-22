@@ -13,11 +13,11 @@ This project predicts obesity levels based on lifestyle and health data using ma
 
 ## 🛠️ **Setup & Installation**  
 1. **Clone the repository**:  
-   git clone https://github.com/antan123/AAI_510_final_project.git
-   cd AAI_510_final_project
+   - git clone https://github.com/antan123/AAI_510_final_project.git
+   - cd AAI_510_final_project
 2. **Create a Virtual Environment**:
-   python3 -m venv env
-   env\Scripts\activate.bat (For Windows)
+   - python3 -m venv env
+   - env\Scripts\activate.bat (For Windows)
 3. **Install dependencies**:  
    pip install -r requirements.txt 
 
