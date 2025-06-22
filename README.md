@@ -11,7 +11,7 @@ This project predicts obesity levels based on lifestyle and health data using ma
 - Target variable: Obesity levels (e.g., Underweight, Normal, Overweight, Obese).  
 - Dataset Source: https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition
 
-## 🛠️ **Setup & Installation**  
+## **Setup & Installation**  
 1. **Clone the repository**:  
    - git clone https://github.com/antan123/AAI_510_final_project.git
    - cd AAI_510_final_project
@@ -23,7 +23,7 @@ This project predicts obesity levels based on lifestyle and health data using ma
 
 ---
 
-## 🔍 **Project Workflow**  
+## **Project Workflow**  
 1. **Exploratory Data Analysis (EDA)**: Visualized data distributions, correlations, and outliers.  
 2. **Modelling**: Trained and compared three models:  
    - `RandomForestClassifier`  
@@ -35,7 +35,7 @@ This project predicts obesity levels based on lifestyle and health data using ma
 
 ---
 
-## 🏆 **Results**  
+## **Results**  
 **Best Model**: XGBoost  
 - **Accuracy**: 98.8%  
 - **Precision**: 98.8%  
@@ -43,11 +43,11 @@ This project predicts obesity levels based on lifestyle and health data using ma
 
 ---
 
-## 🌍 **Real-World Impact**  
+## **Real-World Impact**  
 This tool can:  
-✅ **Group individuals by obesity risk** (e.g., "High-Risk," "Moderate," "Low-Risk") for targeted interventions.  
-✅ **Help healthcare systems** allocate resources efficiently (e.g., prioritize high-risk groups for check-ups).  
-✅ **Guide personalized lifestyle changes**:  
-   - Suggest diet/exercise plans based on predicted risk level.  
-   - Monitor progress by re-evaluating users over time.  
+* **Group individuals by obesity risk** (e.g., "High-Risk," "Moderate," "Low-Risk") for targeted interventions.  
+* **Help healthcare systems** allocate resources efficiently (e.g., prioritize high-risk groups for check-ups).  
+* **Guide personalized lifestyle changes**:  
+- Suggest diet/exercise plans based on predicted risk level.  
+- Monitor progress by re-evaluating users over time.  
 
