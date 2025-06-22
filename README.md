@@ -48,6 +48,6 @@ This tool can:
 * **Group individuals by obesity risk** (e.g., "High-Risk," "Moderate," "Low-Risk") for targeted interventions.  
 * **Help healthcare systems** allocate resources efficiently (e.g., prioritize high-risk groups for check-ups).  
 * **Guide personalized lifestyle changes**:  
-- Suggest diet/exercise plans based on predicted risk level.  
-- Monitor progress by re-evaluating users over time.  
+   - Suggest diet/exercise plans based on predicted risk level.  
+   - Monitor progress by re-evaluating users over time.  
 
