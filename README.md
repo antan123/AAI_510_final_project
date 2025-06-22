@@ -13,7 +13,7 @@ This project predicts obesity levels based on lifestyle and health data using ma
 
 ## 🛠️ **Setup & Installation**  
 1. **Clone the repository**:  
-   git clone https://github.com/your-username/obesity-level-prediction.git
+   git clone https://github.com/antan123/AAI_510_final_project.git
    cd AAI_510_final_project
 2. **Create a Virtual Environment**:
    python3 -m venv env
